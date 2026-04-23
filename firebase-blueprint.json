@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User's learning preferences and details",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "skillLevel": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+        "goal": { "type": "string" },
+        "timePerDay": { "type": "number", "description": "Hours per day" },
+        "deadline": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "skillLevel", "goal", "timePerDay"]
+    },
+    "LearningPath": {
+      "title": "Learning Path",
+      "description": "Generated roadmap for the user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "goal": { "type": "string" },
+        "modules": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "goal", "modules"]
+    },
+    "Progress": {
+      "title": "User Progress",
+      "description": "Completed tasks and modules",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "pathId": { "type": "string" },
+        "completedTaskIds": { "type": "array" },
+        "completedModuleIds": { "type": "array" },
+        "quizHistory": { "type": "array" }
+      }
+    },
+    "DailyLog": {
+      "title": "Daily Focus Log",
+      "description": "Tracking motivation and burnout",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "focusScore": { "type": "number" },
+        "mood": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/profiles/{userId}": { "schema": "UserProfile", "description": "User learning profiles" },
+    "/paths/{pathId}": { "schema": "LearningPath", "description": "Generated learning paths" },
+    "/progress/{userId}": { "schema": "Progress", "description": "User completion tracking" },
+    "/logs/{logId}": { "schema": "DailyLog", "description": "Engagement logs" }
+  }
+}
